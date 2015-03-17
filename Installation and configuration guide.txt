@@ -1,0 +1,37 @@
+# RESTful API Installation and Configuration
+You can either do the following steps or execute the attached Shell script “monitoring-SE-RESTfulAPI-install” that does them for you. To use this script you need to have Zabbix, MySQL and Java JDK1.8 already installed.
+The script does the following steps that you could do yourself.
+
+After having the required software up and running, you need then to download and unzip the source code from the Git repository at:
+git clone https://github.com/spring-guides/gs-rest-service.git 
+
+You need then to do the following installation steps:
+1.	Get into gs-rest-service/initial
+cd gs-rest-service/initial
+2.	Update the configuration file build.gradle, to include the dependencies that are required such as libraries for JSON, etc. It depends on the packages needed by the source code.
+3.	The source code (the software that includes the RESTful API implementations) should be updated. This should be in the directory called by default “hello” directory. Replace the default hello directory with another directory that you could name it as you wish. 
+4.	Copy the source codes of the Monitoring Service’s RESTful API into the new created directory.
+5.	You need a configuration file that includes some properties required by the RESTful API software. In this document we call it properties.xml file. It needs to include the server_ip that runs the Zabbix server <monitoring_server_ip/zabbix>. 
+
+The properties.xml file will then look as follow:
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="server_ip">127.0.0.1/zabbix</entry>
+</properties>
+
+The FRESful API software is to be cloned from the Git repository:
+git clone https://github.com/tubav/Monitroing_SE_Zabbix_RESTful_API.git
+Copy RESTful-API/* to gs-rest-service/initial.  
+
+6.	To make the server run automatically after each image boot, you could create an executable file and save it in /usr/sbin, we call this file in this document “RESTful_server.sh”, it should include the following:
+#!/bin/sh
+cd …./gs-rest-service/initial
+./gradlew bootRun &
+
+To have this executable file executed after each boot, there are several ways; one of them is that you could add the following command in the file /etc/rc.local before exit 0: 
+/usr/sbin/RESTful_server
+You could reboot the machine for test, you should have the service run automatically, but otherwise you have done something wrong.
+7.	But if you don’t need to have the RESTful server run automatically after each boot, you can run it manually. You just go back to gs-rest-service/initial directory and run the following command:
+./gradlew bootRun
+8.	To test the metrics, man can just follow the specification and guide provided in the “User guide” documentation.

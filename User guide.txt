@@ -1,0 +1,43 @@
+# RESTful API Usage
+The RESTful API allows you currently only to get monitoring information about exiting metrics. This can be done by posting a request to 
+
+http://<monitoring_server_ip>/calledMethod?
+
+by identifying the calledMethod. You will then get a response including the results.
+
+Table 1 shows metrics already supported with their corresponding function calls in RESTful APIs.
+
+Before requesting information data you need first to get an authentication token using your credentials. This can be done using curl or GET, described above, as follow:
+GET “http://127.0.0.1:8080/authentication” 
+
+You get the following response:
+{"result":"4dcdcda6fec4cdf077445298d555fe60"}
+
+You use the token that you have got as result in further requests. For example if you need to get the host ID, you post the following request:
+GET “http://127.0.0.1:8080/hosts?authentication=4dcdcda6fec4cdf077445298d555fe60”
+
+You get the following response:
+{"hostList":[{"hostid":"10093","hostName":"Monitor"}]}
+
+Table 1 - Monitoring Metrics and Operations in RESTful API
+Metric/Operation Name										RESTful_call
+getUserAuthenticationToken									http://<server_ip>:<port>/authentication
+getHostID													http://<server_ip>:<port>/hosts?authentication=<authenticationResult>
+getCPUidleTime												http://<server_ip>:<port>/cpu?hostid=<host_id>&authentication=<authenticationResult>&metricType=idle
+getCPUiowaitTime											http://<server_ip>:<port>/cpu?hostid=<host_id>&authentication=<authenticationResult>&metricType=iowait
+getCPUniceTime												http://<server_ip>:<port>/cpu?hostid=<host_id>&authentication=<authenticationResult>&metricType=nice
+getCPUsystemTime											http://<server_ip>:<port>/cpu?hostid=<host_id>&authentication=<authenticationResult>&metricType=system
+getCPUuserTime												http://<server_ip>:<port>/cpu?hostid=<host_id>&authentication=<authenticationResult>&metricType=user
+getCachedMemory												http://<server_ip>:<port>/memory?hostid=<host_id>&authentication=<authenticationResult>&metricType=cachedMemory
+getFreeMemory												http://<server_ip>:<port>/memory?hostid=<host_id>&authentication=<authenticationResult>&metricType=freeMemory
+getSharedMemory												http://<server_ip>:<port>/memory?hostid=<host_id>&authentication=<authenticationResult>&metricType=sharedMemory
+getTotalMemory												http://<server_ip>:<port>/memory?hostid=<host_id>&authentication=<authenticationResult>&metricType=totalMemory
+getBufferMemory												http://<server_ip>:<port>/memory?hostid=<host_id>&authentication=<authenticationResult>&metricType=bufferedMemory
+getFreeSwapMemory											http://<server_ip>:<port>/memory?hostid=<host_id>&authentication=<authenticationResult>&metricType=freeSwap
+getIngoingTrafficOnInterface X	e.g. interface eth0, 		http://<server_ip>:<port>/network?hostid=<value>&authentication=<authenticationResult>&metricType=eth0In
+getOutgoingTrafficOnInterface X e.g. interface eth0, 		http://<server_ip>:<port>/network?hostid=<host_id>&authentication=<authenticationResult>&metricType=eth0Out
+getNetworkLatency											http://<server_ip>:<port>/network?hostid=<host_id>&authentication=<authenticationResult>&metricType=lateny
+getPacketLoss												http://<server_ip>:<port>/network?hostid=<host_id>&authentication=<authenticationResult>&metricType=packetloss
+getServiceAvailability										http://<server_ip>:<port>/service?hostid=<host_id>&authentication=<authenticationResult>&metricType=availability
+getGraphs													http://<server_ip>:<port>/graphs?hostid=<host_id>&authentication=[authenticationResult]
+
