@@ -10,7 +10,7 @@ Table 1 shows metrics already supported with their corresponding function calls 
 Before requesting information data you need first to get an authentication token using your credentials. This can be done using curl or GET, as follow:
 GET “http://localhost:8080/authentication?username=admin&password=zabbix” 
 
-where the username=admin and password=zabbix are the default settings
+where the username=admin and password=zabbix are the default settings, the local host is used as server_ip, but if Zabbix server is set to any IP, please use that one
 
 You get the following response:
 {"result":"4dcdcda6fec4cdf077445298d555fe60"}
